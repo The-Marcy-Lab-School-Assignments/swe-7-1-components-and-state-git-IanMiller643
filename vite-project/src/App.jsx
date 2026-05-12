@@ -1,71 +1,27 @@
-import './App.css'
-import { useState } from 'react'
+import './index.css';
+import { Greeting } from './components/Greeting';
+import { ThemeToggle } from './components/ThemeToggle';
+import { useState } from 'react';
 
-const ThemeToggle = () => {
 
-    return (
-        <header>
-            <button>Switch Mode</button>
-        </header>
-    )
-}
-
-const FontButtons = ({ increment, decrement }) => {
-
-    return (
-        <div>
-            <button onClick={increment}>A+</button>
-            <button onClick={decrement}>A-</button>
-        </div>
-    )
-}
-
-const Greeting = ({ greeting, style }) => {
-
-    return (
-        <h1 style={style}>{greeting}</h1>
-    )
-}
-
-const LanguageButtons = () => {
-
-    return (
-        <div>
-            <button>English</button>
-            <button>Spanish</button>
-            <button>Haitian Creole</button>
-            <button>Portuguese</button>
-            <button>French</button>
-            <button>Japanese</button>
-        </div>
-    )
-}
-
-const History = () => {
-
-    return (
-        <div>
-            <h2>History</h2>
-            <p>No selections yet</p>
-            <button>Clear History</button>
-        </div>
-    )
-}
 const App = () => {
-    const [size, setSize] = useState(50);
+    const [mode, toggleMode] = useState(true);
 
-    const increment = () => setSize(Math.min(size + 5, 72));
-    const decrement = () => setSize(Math.max(size - 5, 12));
+    const handleToggle = () => {
+        toggleMode(prev => {
+            document.body.className = prev ? "light" : "dark";
+            return !prev;
+        });
+    }
 
     return (
-        <main>
-            <ThemeToggle />
-            <FontButtons increment={increment} decrement={decrement} />
-            <Greeting greeting="Hi" style={{ fontSize: `${size}px` }} />
-            <LanguageButtons />
-            <History />
-        </main>
+        <>
+            <ThemeToggle mode={mode} toggleMode={handleToggle} />
+            <main>
+                <Greeting />
+            </main>
+        </>
     )
 }
 
-export default App
+export default App;
